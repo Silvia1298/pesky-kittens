@@ -26,3 +26,8 @@ sysinfo.txt
 
 # Addressables
 ServerData/
+
+*.sln
+*.slnx
+*.csproj
+
