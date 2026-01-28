@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500 * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("moving", true);
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            
         }
 
         if(Input.GetKey("right"))
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(500 * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("moving", true);
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
+        
         }   
 
         if(!Input.GetKey("left") && !Input.GetKey("right"))
@@ -34,7 +36,9 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown("up") && canJump)
         {
             canJump = false;
-             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200));
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200));
+            gameObject.GetComponent<Animator>().SetTrigger("jump");
+            gameObject.GetComponent<Animator>().SetBool("moving", false);
         }
     }
 
