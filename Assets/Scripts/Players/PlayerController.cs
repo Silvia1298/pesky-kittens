@@ -1,53 +1,64 @@
-using System;
+
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    bool canJump;
+    bool isGrounded;
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundRadius = 0.07f;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] float jumpForce = 5f;
 
+    private Rigidbody2D rb;
+ 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    {}
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey("left"))
+        if(Input.GetKey("left")) 
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500 * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("moving", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = true;
-            
+            gameObject.GetComponent<Animator>().SetBool("moving", true); 
+            gameObject.GetComponent<SpriteRenderer>().flipX = true; 
         }
-
-        if(Input.GetKey("right"))
-        {
+        if(Input.GetKey("right")) 
+        { 
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(500 * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("moving", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = false;
-        
-        }   
+            gameObject.GetComponent<Animator>().SetBool("moving", true); 
+            gameObject.GetComponent<SpriteRenderer>().flipX = false; 
+        }
 
         if(!Input.GetKey("left") && !Input.GetKey("right"))
         {
              gameObject.GetComponent<Animator>().SetBool("moving", false);
         }
 
-        if(Input.GetKeyDown("up") && canJump)
+
+        isGrounded = Physics2D.OverlapCircle(
+        groundCheck.position,
+        groundRadius,
+        groundLayer
+        );
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            canJump = false;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 200));
-            gameObject.GetComponent<Animator>().SetTrigger("jump");
-            gameObject.GetComponent<Animator>().SetBool("moving", false);
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+
+    Debug.Log("Grounded? " + isGrounded);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.transform.tag == "ground")
-        {
-            canJump = true;
-        }
-    
-    }
+    void OnDrawGizmosSelected()
+{
+    if (groundCheck == null) return;
+    Gizmos.color = Color.green;
+    Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
+}
+
+
 }

@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Tag ground
   - ground
+  - SceneTrigger
   layers:
   - Default
   - TransparentFX
@@ -15,8 +15,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Ground
+  - BaseGround
   - 
   - 
   - 
@@ -40,6 +40,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2580276653
+    locked: 0
+  - name: Ground
+    uniqueID: 1941587151
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
