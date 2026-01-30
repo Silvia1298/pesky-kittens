@@ -7,11 +7,14 @@ public class CameraSystem : MonoBehaviour
     //scene management
     public static CameraSystem instance;
     public enum GameState {Loading, Active, Paused, Complete}
+    [SerializeField] private GameObject playerPrefab;
     public GameState CurrentGameState {get; private set;}
     public static Action<GameState> onGameStateChanged;
+    GameObject player; 
     private void Awake()
     {
         instance = this;
+        player = Instantiate(playerPrefab, transform.position, Quaternion.identity);
     }
     private void Start()
     {
@@ -42,16 +45,22 @@ public class CameraSystem : MonoBehaviour
         CurrentGameState = newState;
         onGameStateChanged?.Invoke(newState);
     }
-    private void HandleComplete()
-    {
-        int index = SceneManager.GetActiveScene().buildIndex;
-        int nextIndex = index + 1;
-
-        if(nextIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextIndex);
+    private void HandleComplete() 
+    { 
+        int index = SceneManager.GetActiveScene().buildIndex; 
+        int nextIndex = index + 1; 
+        int previousIndex = index -1; 
+    
+       if(nextIndex < SceneManager.sceneCountInBuildSettings) 
+       { 
+        SceneManager.LoadScene(nextIndex); 
+        player.transform.position = new Vector3(-40f, -9f, 0f); 
+        } 
+        else if(previousIndex < SceneManager.sceneCountInBuildSettings) 
+        { 
+            SceneManager.LoadScene(previousIndex); 
+        player.transform.position = new Vector3(44f, 2f, 0f); 
         }
-
     }
 
      private void OnTriggerEnter2D(Collider2D other)

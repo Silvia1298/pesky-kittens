@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ability : MonoBehaviour
@@ -10,4 +12,5 @@ public abstract class Ability : MonoBehaviour
     }
 
     public abstract void Activate();
+
 }

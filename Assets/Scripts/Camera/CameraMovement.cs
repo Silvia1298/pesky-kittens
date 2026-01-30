@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-
     public Transform objective;        
     public Vector3 displacement = new Vector3(0f, 1f, 0f); 
     public float manualOrthographicSize = 10f;
