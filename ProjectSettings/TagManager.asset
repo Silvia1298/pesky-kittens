@@ -7,6 +7,8 @@ TagManager:
   - ground
   - SceneTrigger
   - SceneTrigger2
+  - WaterEdge
+  - Spawn
   layers:
   - Default
   - TransparentFX

@@ -8,8 +8,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundRadius = 0.07f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpForce = 5f;
+     public static PlayerController instance;
 
     private Rigidbody2D rb;
+
+     private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Keep this player alive across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicates
+        }
+    }
  
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,7 +64,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-    Debug.Log("Grounded? " + isGrounded);
+    //Debug.Log("Grounded? " + isGrounded);
     }
 
     void OnDrawGizmosSelected()
