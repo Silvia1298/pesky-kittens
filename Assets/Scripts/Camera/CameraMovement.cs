@@ -36,7 +36,6 @@ public class CameraMovement : MonoBehaviour
     }
     private void Start()
     {
-
         if (objective == null)
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");

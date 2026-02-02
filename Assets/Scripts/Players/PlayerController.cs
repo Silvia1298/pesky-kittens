@@ -9,28 +9,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundRadius = 0.07f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpForce = 5f;
-     public static PlayerController instance;
-
     private Rigidbody2D rb;
 
-     private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
- 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+//PLAYER MOVEMENT
     void Update()
     {
         if(Input.GetKey("left")) 
@@ -58,12 +44,13 @@ public class PlayerController : MonoBehaviour
         groundLayer
         );
 
+//GROUNDCHECK
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-    //Debug.Log("Grounded? " + isGrounded);
+        Debug.Log("Grounded? " + isGrounded);
     }
 
 

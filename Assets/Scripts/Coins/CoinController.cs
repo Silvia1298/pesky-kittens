@@ -8,14 +8,10 @@ public class CoinController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(!collision.CompareTag("Player")) return;
-        if (CoinCheck.instance == null) return;
-
-        if (!CoinCheck.instance.collectedCoins.Contains(coinID))
-        {
-            CoinCheck.instance.CollectCoin(coinID);
-            ScoreManager.scoreManager.RaiseScore(1);
-            AudioManager.instance.PlaySound(coinSound);
-            gameObject.SetActive(false);
-        }  
+ 
+        ScoreManager.scoreManager.RaiseScore(1);
+        AudioManager.instance.PlaySound(coinSound);
+        gameObject.SetActive(false);
+        
     }
 }

@@ -174,10 +174,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1456751981346165618, guid: 69e37802ea4787743b4c7b949bee055b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1897887402}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69e37802ea4787743b4c7b949bee055b, type: 3}
 --- !u!1 &221208648
 GameObject:
@@ -1342,7 +1339,6 @@ GameObject:
   - component: {fileID: 887582478}
   - component: {fileID: 887582477}
   - component: {fileID: 887582476}
-  - component: {fileID: 887582475}
   m_Layer: 0
   m_Name: SceneTrigger
   m_TagString: Untagged
@@ -1350,19 +1346,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &887582475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887582474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f9f03a8d97a134396b0b283419ffe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneTrigger
-  direction: 1
 --- !u!61 &887582476
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10218,70 +10201,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6108659804838590110, guid: 69e37802ea4787743b4c7b949bee055b, type: 3}
   m_PrefabInstance: {fileID: 155509723}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1844974457
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1844974460}
-  - component: {fileID: 1844974459}
-  m_Layer: 0
-  m_Name: Scripter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1844974459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1844974457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a33481284ca48641adb7dc6d126d2af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CoinController
-  coinSound: {fileID: 0}
-  coinID: 
---- !u!4 &1844974460
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1844974457}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1897887401 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1456751981346165618, guid: 69e37802ea4787743b4c7b949bee055b, type: 3}
-  m_PrefabInstance: {fileID: 155509723}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1897887402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1897887401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e413bf2c5a77197489c9a3314994538f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameController
-  defaultSpawn: {fileID: 1019983840}
 --- !u!1 &1937677845
 GameObject:
   m_ObjectHideFlags: 0
@@ -10322,9 +10241,8 @@ SceneRoots:
   - {fileID: 1512829966}
   - {fileID: 1423629610}
   - {fileID: 1088414417}
-  - {fileID: 1844974460}
+  - {fileID: 1357639041}
   - {fileID: 155509723}
   - {fileID: 1937677846}
   - {fileID: 887582478}
   - {fileID: 1019983840}
-  - {fileID: 1357639041}

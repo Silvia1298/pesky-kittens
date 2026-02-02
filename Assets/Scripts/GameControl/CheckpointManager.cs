@@ -1,17 +1,17 @@
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class CheckpointManager : MonoBehaviour
 {
     GameController gameController;
     public Transform respawnPoint;
     Collider2D coll;
-    void Awake()
+    private void Awake()
     {
-        gameController = GameObject.FindGameObjectWithTag("Player").GetComponent<GameController>();
         coll = GetComponent<Collider2D>();
+        gameController = GameObject.FindGameObjectWithTag("Player").GetComponent<GameController>();
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Player"))
         {
@@ -20,9 +20,4 @@ public class Checkpoint : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
