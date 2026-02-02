@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 
 public class SceneTrigger : MonoBehaviour
@@ -15,10 +16,24 @@ public class SceneTrigger : MonoBehaviour
 
     public enum SceneDirection { Forward, Backward }
     public SceneDirection direction = SceneDirection.Forward;
-
-    // Dictionary<sceneIndex, checkpointPosition>
     private Dictionary<int, Vector2> sceneCheckpoints = new Dictionary<int, Vector2>();
 
+    
+    bool isForward;
+
+    void Direction()
+    {
+        if(direction == SceneDirection.Forward)
+        {
+            isForward = true;
+        }
+        else
+        {
+            isForward = false;
+        }
+    }
+
+  
     public void UpdateCheckpoint(Vector2 pos)
     {
         int sceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -74,6 +89,12 @@ public class SceneTrigger : MonoBehaviour
         if (prevIndex >= 0)
         {
             SceneManager.LoadScene(prevIndex);
+        }
+
+// si el trigger esta taggeado como forward, empezar desde el spawn asignado a la siguiente escena, No el default.
+        if(isForward)
+        {
+            
         }
         
     }

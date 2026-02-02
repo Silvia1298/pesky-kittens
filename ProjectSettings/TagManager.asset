@@ -9,6 +9,7 @@ TagManager:
   - SceneTrigger2
   - WaterEdge
   - Spawn
+  - Text
   layers:
   - Default
   - TransparentFX

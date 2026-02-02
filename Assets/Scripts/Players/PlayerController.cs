@@ -1,4 +1,5 @@
 
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -17,21 +18,19 @@ public class PlayerController : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Keep this player alive across scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Destroy duplicates
+            Destroy(gameObject);
         }
     }
  
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKey("left")) 
@@ -66,13 +65,6 @@ public class PlayerController : MonoBehaviour
 
     //Debug.Log("Grounded? " + isGrounded);
     }
-
-    void OnDrawGizmosSelected()
-{
-    if (groundCheck == null) return;
-    Gizmos.color = Color.green;
-    Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
-}
 
 
 }
