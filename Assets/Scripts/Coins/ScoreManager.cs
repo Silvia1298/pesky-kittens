@@ -6,14 +6,27 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI coinsCollected;
     public static ScoreManager scoreManager;
     int score = 0;
+    int totalCoins = 0;
 
     void Start()
     {
         scoreManager = this;
+        totalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
+        UpdateUI();
     }
     public void RaiseScore(int s)
     {
         score += s;
-        coinsCollected.text = "Coins: " + score;
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        coinsCollected.text = "Coins: " +score + " / " +totalCoins;
+    }
+
+    public bool AllCoinsCollected()
+    {
+        return score >= totalCoins;
     }
 }

@@ -50,7 +50,8 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
 
-        Debug.Log("Grounded? " + isGrounded);
+        
+        //Debug.Log("Grounded? " + isGrounded);
     }
 
 
