@@ -1,9 +1,17 @@
+using System.Collections;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
 public class GameController : MonoBehaviour
 {
     Vector2 checkpointPos;
+    public static GameController gameController;
+
+    void Awake()
+    {
+        gameController = this;
+    }
+
     void Start()
     {
         checkpointPos = transform.position;
@@ -18,9 +26,11 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
-        Respawn();
+        StartCoroutine(Respawn(0.5f));
+        GetComponent<SpriteRenderer>().enabled = false;
+
     }
 
     public void UpdateCheckpoint(Vector2 pos)
@@ -28,9 +38,13 @@ public class GameController : MonoBehaviour
         checkpointPos = pos;
     }
 
-    void Respawn()
+    IEnumerator Respawn(float duration)
     {
+        yield return new WaitForSeconds(duration);
         transform.position = checkpointPos;
+        PlayerHealth.playerHealth.RestoreHealth();
+        GetComponent<SpriteRenderer>().enabled = true;
+
     }
 
 

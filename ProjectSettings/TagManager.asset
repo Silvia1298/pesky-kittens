@@ -10,6 +10,9 @@ TagManager:
   - WaterEdge
   - Spawn
   - Text
+  - Coin
+  - Play
+  - Enemy
   layers:
   - Default
   - TransparentFX
