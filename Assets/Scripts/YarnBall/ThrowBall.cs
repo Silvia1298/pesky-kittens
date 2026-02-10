@@ -32,16 +32,4 @@ public class ThrowBall : MonoBehaviour
             }
         }
     }
-    void AddScore()
-    {
-        scoreAmount += 1;
-    }
-
-    void Throw()
-    {
-        if (scoreAmount == requiredHits)
-        {
-            Destroy(gameObject);
-        }
-    }
 }
