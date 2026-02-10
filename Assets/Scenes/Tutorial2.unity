@@ -14457,7 +14457,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6510398991245090362, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1497497223}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4065855034052741489, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2112387617}
   m_SourcePrefab: {fileID: 100100000, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
 --- !u!1 &2032278441
 GameObject:
@@ -14553,6 +14556,24 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2112387613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4065855034052741489, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
+  m_PrefabInstance: {fileID: 1971429049}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2112387617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112387613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae6087e025f61d94cad2da38297c80c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIScreenLock
+  xOffset: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
