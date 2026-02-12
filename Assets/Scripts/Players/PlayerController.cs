@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundRadius = 0.07f;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float jumpForce = 5f;
+    int jumpCount = 0;
     private Rigidbody2D rb;
 
     void Start()
@@ -43,10 +44,16 @@ public class PlayerController : MonoBehaviour
         );
 
 //GROUNDCHECK
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < 1))
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }     
+            jumpCount++;
+        }
+        if (isGrounded)
+        {
+            jumpCount = 0;
+        }
+
         //Debug.Log("Grounded? " + isGrounded);
     }
 

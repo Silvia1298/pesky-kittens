@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
 
     void UpdateUI()
     {
-        coinsCollected.text = "Coins: " +score + " / " +totalCoins;
+        coinsCollected.text = "Bubbles: " +score + " / " +totalCoins;
     }
 
     public bool AllCoinsCollected()
