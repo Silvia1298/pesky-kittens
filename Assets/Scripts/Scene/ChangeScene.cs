@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChangeScene : MonoBehaviour
 {
@@ -8,30 +9,51 @@ public class ChangeScene : MonoBehaviour
 
     private Animator anim;
 
-    private void Awake()
+    void Awake()
     {
-        anim = text.GetComponent<Animator>();
-        if (anim != null)
-        {
-            anim.Play("TextPopUp", 0, 0f);
-        }
+        if (text != null)
+            anim = text.GetComponent<Animator>();
     }
-    void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(!collision.CompareTag("Player")) return;
-        if(ScoreManager.scoreManager.AllCoinsCollected())
+        if (!collision.CompareTag("Player")) return;
+
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        bool canProceed = false;
+
+        if (sceneName == "Scene1")
         {
-            //change scene
+            // Only coins needed
+            canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+        }
+        else if (sceneName == "Scene2")
+        {
+            // Coins AND balls needed
+            canProceed = ScoreManager.scoreManager.AllCoinsCollected() 
+                         && BallCount.ballCount.AllBallsCollected();
+        }
+        else
+        {
+            // Default: only coins
+            canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+        }
+
+        if (canProceed)
+        {
+            Time.timeScale = 1f; // ensure game isn't paused
             SceneController.instance.NextLevel();
         }
         else
         {
-            text.text = message;
-            text.gameObject.SetActive(true);
-            Animator anim = text.GetComponent<Animator>();
-            if (anim != null)
+            // Show message
+            if (text != null)
             {
-                anim.Play("TextPopUp", 0, 0f); // restart animation from beginning
+                text.text = message;
+                text.gameObject.SetActive(true);
+                if (anim != null)
+                    anim.Play("TextPopUp", 0, 0f);
             }
         }
     }

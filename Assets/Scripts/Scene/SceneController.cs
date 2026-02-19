@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,13 +18,35 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void NextLevel()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        StartCoroutine(LoadLevelAsync(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        StartCoroutine(LoadLevelAsync(sceneName));
+    }
+
+    private IEnumerator LoadLevelAsync(int buildIndex)
+    {
+        AsyncOperation op = SceneManager.LoadSceneAsync(buildIndex);
+        op.allowSceneActivation = false; // Wait to activate
+
+        // Optional: fade-out or wait
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        op.allowSceneActivation = true; // Now activate scene
+    }
+
+    private IEnumerator LoadLevelAsync(string sceneName)
+    {
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
+        op.allowSceneActivation = false;
+
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        op.allowSceneActivation = true;
     }
 }

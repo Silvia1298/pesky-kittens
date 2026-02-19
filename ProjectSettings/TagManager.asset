@@ -13,6 +13,9 @@ TagManager:
   - Coin
   - Play
   - Enemy
+  - Ball
+  - Boss
+  - npc
   layers:
   - Default
   - TransparentFX

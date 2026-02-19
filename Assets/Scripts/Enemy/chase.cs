@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class chase : MonoBehaviour
+public class Chase : MonoBehaviour
 {
     bool isGrounded;
     [SerializeField] Transform groundCheck;
@@ -13,7 +13,6 @@ public class chase : MonoBehaviour
 
     void Update()
     {
-         // Check ground
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
 
         distance = Vector2.Distance(transform.position, player.transform.position);
@@ -29,7 +28,5 @@ public class chase : MonoBehaviour
 
             transform.position = new Vector2(newX, transform.position.y);
         }
-
-        Debug.Log("Grounded? " + isGrounded);
     }
 }
