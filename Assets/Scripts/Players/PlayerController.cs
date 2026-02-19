@@ -53,8 +53,6 @@ public class PlayerController : MonoBehaviour
         {
             jumpCount = 0;
         }
-
-        Debug.Log("Grounded? " + isGrounded);
     }
 
 

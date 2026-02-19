@@ -8,6 +8,20 @@ public class ScoreManager : MonoBehaviour
     int score = 0;
     int totalCoins = 0;
 
+    private void Awake()
+    {
+        if (scoreManager == null)
+        {
+            scoreManager = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+
     void Start()
     {
         scoreManager = this;

@@ -43,7 +43,9 @@ public class ChangeScene : MonoBehaviour
         if (canProceed)
         {
             Time.timeScale = 1f; // ensure game isn't paused
-            SceneController.instance.NextLevel();
+            Debug.Log(SceneController.Instance);
+
+            SceneController.Instance.NextLevel();
         }
         else
         {

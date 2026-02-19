@@ -6,9 +6,27 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
 
+    public static SceneController Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<SceneController>();
+                if (instance == null)
+                {
+                    var go = new GameObject("SceneController");
+                    instance = go.AddComponent<SceneController>();
+                }
+            }
+
+            return instance;
+        }
+    }
+
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
