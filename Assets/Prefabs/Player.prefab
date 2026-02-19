@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 472339892690036620}
   - component: {fileID: 1043001173095058439}
   - component: {fileID: 65486278852466106}
+  - component: {fileID: 10303639199509518}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -209,6 +210,23 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.2, y: 0.14}
   m_EdgeRadius: 0
+--- !u!114 &10303639199509518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456751981346165618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8607a7c7c324a1c3caf4f528cc1438e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HairballAbility
+  hasAbility: 0
+  hairballPrefab: {fileID: 3997717687051335183, guid: 20fbfa55c152f1522bc17cf6fd92ca56, type: 3}
+  shootForce: 30
+  cooldown: 0.5
+  shootSound: {fileID: 0}
 --- !u!1 &3599904466035935620
 GameObject:
   m_ObjectHideFlags: 0
