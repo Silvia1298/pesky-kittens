@@ -5,10 +5,36 @@ public class Hairball : MonoBehaviour
     public int damage = 3;
     public float lifetime = 3f;
     public bool firedByPlayer = true;
+    public bool followPlayer = false; // For boss hairballs
+    public float homingStrength = 5f; // How aggressively it follows
+
+    private Transform player;
+    private Rigidbody2D rb;
 
     void Start()
     {
         Destroy(gameObject, lifetime);
+        rb = GetComponent<Rigidbody2D>();
+        
+        if (!firedByPlayer && followPlayer)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+                player = playerObj.transform;
+        }
+    }
+
+    void Update()
+    {
+        if (!firedByPlayer && followPlayer && player != null && rb != null)
+        {
+            // Calculate direction towards player
+            Vector2 direction = (player.position - transform.position).normalized;
+            
+            // Smoothly adjust velocity towards player
+            Vector2 targetVelocity = direction * rb.linearVelocity.magnitude;
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, homingStrength * Time.deltaTime);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -32,9 +58,11 @@ public class Hairball : MonoBehaviour
             {
                 PlayerHealth ph = other.GetComponent<PlayerHealth>();
                 if (ph != null)
+                {
+                    GameController.killedByBoss = true;
                     ph.TakeDamage(damage);
+                }
 
-                FlashSprite(other.GetComponent<SpriteRenderer>());
                 Destroy(gameObject);
                 return;
             }
@@ -57,6 +85,8 @@ public class Hairball : MonoBehaviour
             if (obj.CompareTag("Enemy") || obj.CompareTag("Boss"))
             {
                 DamageEnemy(obj);
+                Destroy(gameObject);
+                return;
             }
         }
         else
@@ -67,9 +97,10 @@ public class Hairball : MonoBehaviour
             {
                 PlayerHealth ph = obj.GetComponent<PlayerHealth>();
                 if (ph != null)
+                {
+                    GameController.killedByBoss = true;
                     ph.TakeDamage(damage);
-
-                FlashSprite(obj.GetComponent<SpriteRenderer>());
+                }
             }
         }
 
@@ -78,25 +109,20 @@ public class Hairball : MonoBehaviour
 
     void DamageEnemy(GameObject enemy)
     {
+        // Intentar dañar al boss
+        BossController bc = enemy.GetComponent<BossController>();
+        if (bc != null)
+        {
+            bc.TakeDamage(damage);
+            return;
+        }
+
+        // Si no es boss, dañar al enemigo normal
         EnemyHealth eh = enemy.GetComponent<EnemyHealth>();
         if (eh != null)
+        {
             eh.TakeDamage(damage);
-
-        FlashSprite(enemy.GetComponent<SpriteRenderer>());
-    }
-
-    void FlashSprite(SpriteRenderer sr)
-    {
-        if (sr != null)
-            StartCoroutine(FlashRed(sr));
-    }
-
-    System.Collections.IEnumerator FlashRed(SpriteRenderer sr)
-    {
-        Color original = sr.color;
-        sr.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        if (sr != null)
-            sr.color = original;
+            return;
+        }
     }
 }

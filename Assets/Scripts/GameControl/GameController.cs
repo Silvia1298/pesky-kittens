@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
 {
     Vector2 checkpointPos;
     public static GameController gameController;
+    public static bool killedByBoss = false;
 
     void Awake()
     {
@@ -22,6 +23,7 @@ public class GameController : MonoBehaviour
     {
         if(collision.CompareTag("WaterEdge"))
         {
+            killedByBoss = false; // Not killed by boss
             Die();
         }
     }
@@ -41,6 +43,25 @@ public class GameController : MonoBehaviour
     IEnumerator Respawn(float duration)
     {
         yield return new WaitForSeconds(duration);
+        
+        // Destroy all falling rocks when respawning
+        FallingRock[] rocks = FindObjectsByType<FallingRock>(FindObjectsSortMode.None);
+        foreach (FallingRock rock in rocks)
+        {
+            Destroy(rock.gameObject);
+        }
+        
+        // Restore boss health if it killed the player
+        if (killedByBoss)
+        {
+            BossController boss = FindFirstObjectByType<BossController>();
+            if (boss != null)
+            {
+                boss.health = boss.maxHealth;
+            }
+            killedByBoss = false;
+        }
+        
         transform.position = checkpointPos;
         PlayerHealth.playerHealth.RestoreHealth();
         GetComponent<SpriteRenderer>().enabled = true;

@@ -23,6 +23,10 @@ public class BossController : MonoBehaviour
     public int rockCount = 5;
     public float rockHeightMultiplier = 3f;
 
+    [Header("Health")]
+    public int maxHealth = 30;
+    public int health;
+
     private Transform player;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -30,6 +34,7 @@ public class BossController : MonoBehaviour
     private bool isAttacking;
     private int lastAttack = -1;
     private float bossHeight;
+    private Coroutine flashCoroutine;
 
     // Force position override so Animator can't snap us back
     private bool forcePosition;
@@ -41,6 +46,7 @@ public class BossController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        health = maxHealth;
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
@@ -120,7 +126,10 @@ public class BossController : MonoBehaviour
 
             Hairball hb = hairball.GetComponent<Hairball>();
             if (hb != null)
+            {
                 hb.firedByPlayer = false;
+                hb.followPlayer = true; // Enable homing
+            }
 
             Rigidbody2D rb = hairball.GetComponent<Rigidbody2D>();
             if (rb != null)
@@ -173,32 +182,42 @@ public class BossController : MonoBehaviour
             {
                 PlayerHealth ph = player.GetComponent<PlayerHealth>();
                 if (ph != null)
+                {
+                    GameController.killedByBoss = true;
                     ph.TakeDamage(jumpDamage);
-
-                SpriteRenderer playerSR = player.GetComponent<SpriteRenderer>();
-                if (playerSR != null)
-                    StartCoroutine(FlashRed(playerSR));
+                }
             }
         }
 
         yield return new WaitForSeconds(0.5f);
     }
 
-    IEnumerator FlashRed(SpriteRenderer sr)
-    {
-        Color original = sr.color;
-        sr.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        if (sr != null)
-            sr.color = original;
-    }
-
     IEnumerator MeowRockAttack()
     {
         animator.SetTrigger("meow");
 
-        if (evilMeowSound != null && AudioManager.instance != null)
-            AudioManager.instance.PlaySound(evilMeowSound);
+        // Find AudioManager if it's null
+        if (AudioManager.instance == null)
+        {
+            AudioManager.instance = FindFirstObjectByType<AudioManager>();
+        }
+        
+        if (evilMeowSound != null)
+        {
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySound(evilMeowSound);
+            }
+            else
+            {
+                // Fallback: find any AudioSource and use it
+                AudioSource[] audioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+                if (audioSources.Length > 0)
+                {
+                    audioSources[0].PlayOneShot(evilMeowSound);
+                }
+            }
+        }
 
         yield return new WaitForSeconds(0.5f);
 
@@ -206,7 +225,12 @@ public class BossController : MonoBehaviour
         {
             for (int i = 0; i < rockCount; i++)
             {
+                // Stop spawning rocks if player is dead or null
                 if (player == null) break;
+                
+                PlayerHealth ph = player.GetComponent<PlayerHealth>();
+                if (ph != null && ph.health <= 0) break;
+                
                 Vector3 spawnPos = new Vector3(
                     player.position.x,
                     player.position.y + (bossHeight * rockHeightMultiplier),
@@ -218,5 +242,42 @@ public class BossController : MonoBehaviour
         }
 
         yield return new WaitForSeconds(0.5f);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        FlashDamage();
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void FlashDamage()
+    {
+        if (spriteRenderer != null)
+        {
+            if (flashCoroutine != null)
+                StopCoroutine(flashCoroutine);
+            flashCoroutine = StartCoroutine(FlashRed());
+        }
+    }
+
+    IEnumerator FlashRed()
+    {
+        if (spriteRenderer == null) yield break;
+        
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        
+        if (spriteRenderer != null)
+            spriteRenderer.color = Color.white;
+    }
+
+    void Die()
+    {
+        Debug.Log("Boss defeated! Health: " + health);
+        Destroy(gameObject);
     }
 }

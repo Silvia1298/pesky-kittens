@@ -8,6 +8,7 @@ public class MusicManager : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip scene1Music;
     public AudioClip scene2Music;
+    public AudioClip scene3Music;
     public AudioClip menuMusic;
     public AudioClip endMusic;
     // Add more clips for additional scenes
@@ -21,27 +22,52 @@ public class MusicManager : MonoBehaviour
 
             if (audioSource == null)
                 audioSource = GetComponent<AudioSource>();
+            
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+                audioSource.loop = true;
+            }
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+            
+            // Play music for the current scene (important when starting from MainMenu)
+            PlayMusicForScene(SceneManager.GetActiveScene().name);
         }
         else
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe before destroying
             Destroy(gameObject);
         }
     }
 
     private void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (instance != this) return; // Only the persistent instance should handle this
         PlayMusicForScene(scene.name);
     }
 
     private void PlayMusicForScene(string sceneName)
     {
+        // Ensure audioSource exists
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+                audioSource.loop = true;
+            }
+        }
+
         AudioClip clipToPlay = null;
 
         switch (sceneName)
@@ -55,11 +81,14 @@ public class MusicManager : MonoBehaviour
             case "Scene2":
                 clipToPlay = scene2Music;
                 break;
+            case "Scene3":
+                clipToPlay = scene3Music;
+                break;
             case "End":
                 clipToPlay = endMusic;
                 break;
             default:
-                clipToPlay = scene1Music; // fallback
+                clipToPlay = menuMusic; // fallback
                 break;
         }
 
@@ -67,6 +96,10 @@ public class MusicManager : MonoBehaviour
         {
             audioSource.clip = clipToPlay;
             audioSource.Play();
+        }
+        else if (clipToPlay == null)
+        {
+            audioSource.Stop();
         }
     }
 }

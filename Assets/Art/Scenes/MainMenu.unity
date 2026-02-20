@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1183271221}
+    - target: {fileID: 5103866395097014399, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
+      propertyPath: scene1Music
+      value: 
+      objectReference: {fileID: 8300000, guid: 788debf01f779d74fb275c22bb620e77, type: 3}
+    - target: {fileID: 5103866395097014399, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
+      propertyPath: scene3Music
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d547e29c8839a14f94b394725cb2631, type: 3}
     - target: {fileID: 6476770141869435017, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.73637

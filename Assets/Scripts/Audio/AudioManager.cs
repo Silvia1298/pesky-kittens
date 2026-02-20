@@ -7,15 +7,44 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-
-        audioSource = GetComponent<AudioSource>();
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            audioSource = GetComponent<AudioSource>();
+            
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+            
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void PlaySound(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip, 1f); // 1f = full volume
+        if (clip == null)
+        {
+            return;
+        }
+
+        // Ensure audioSource exists
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+        
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(clip, 1f);
+        }
     }
 }

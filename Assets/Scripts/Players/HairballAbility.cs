@@ -53,9 +53,29 @@ public class HairballAbility : MonoBehaviour
             hairballSR.flipX = true;
         }
 
-        if (shootSound != null && AudioManager.instance != null)
+        // Try to play sound
+        if (shootSound != null)
         {
-            AudioManager.instance.PlaySound(shootSound);
+            // Find AudioManager if it's null
+            if (AudioManager.instance == null)
+            {
+                AudioManager.instance = FindFirstObjectByType<AudioManager>();
+            }
+            
+            // If still null, try to find an AudioSource directly
+            if (AudioManager.instance != null)
+            {
+                AudioManager.instance.PlaySound(shootSound);
+            }
+            else
+            {
+                Debug.LogWarning("HairballAbility: Could not find AudioManager. Trying to play sound directly.");
+                AudioSource[] audioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+                if (audioSources.Length > 0)
+                {
+                    audioSources[0].PlayOneShot(shootSound);
+                }
+            }
         }
     }
 

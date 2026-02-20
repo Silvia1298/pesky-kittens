@@ -1412,7 +1412,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin5
 --- !u!61 &297916845
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1597,7 +1596,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin2
 --- !u!61 &338632262
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1933,6 +1931,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextTrigger
   tutorialText: {fileID: 624956319}
+  panelObject: {fileID: 0}
   message: "Noticed the bubble count goes up when getting one of these? \nCollect
     all the bubbles to move on!"
 --- !u!61 &358567384
@@ -3823,6 +3822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextTrigger
   tutorialText: {fileID: 624956319}
+  panelObject: {fileID: 0}
   message: "Careful! We all know cats don\xB4t like water. \nYou are not an exception
     so avoid it at all costs ;)"
 --- !u!61 &966538418
@@ -6318,7 +6318,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin6
 --- !u!61 &1452889978
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16134,6 +16133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextTrigger
   tutorialText: {fileID: 624956319}
+  panelObject: {fileID: 0}
   message: "Hey there!. I\xB4m your fellow guide :)\nLet\xB4s start with the basics.
     \nUse your left/right keys to move!"
 --- !u!1 &1758466336
@@ -16570,7 +16570,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin1
 --- !u!1 &1920825425
 GameObject:
   m_ObjectHideFlags: 0
@@ -16835,6 +16834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextTrigger
   tutorialText: {fileID: 624956319}
+  panelObject: {fileID: 0}
   message: "This flower right here is a checkpoint.\nYou\xB4ll respawn in these."
 --- !u!61 &1955861209
 BoxCollider2D:
@@ -17415,7 +17415,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin4
 --- !u!61 &2069507967
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17599,6 +17598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextTrigger
   tutorialText: {fileID: 624956319}
+  panelObject: {fileID: 0}
   message: "Great! Now you\xB4ll need to jump. \nClick on your space key to do so,
     you can double jump while pressing the same key while in air!"
 --- !u!61 &2108747788
@@ -17694,7 +17694,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinController
   coinSound: {fileID: 8300000, guid: 12ef7dca433ab5444babc9ecdec239c0, type: 3}
-  coinID: Coin3
 --- !u!61 &2129674847
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17870,11 +17869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5228106644909460753, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1003.4
+      value: -980
       objectReference: {fileID: 0}
     - target: {fileID: 5228106644909460753, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -502.7
+      value: -512
       objectReference: {fileID: 0}
     - target: {fileID: 5550508352435317792, guid: e27b726e37fc44a4d83b7f15b511e44e, type: 3}
       propertyPath: m_Camera
@@ -18365,6 +18364,14 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1296582448}
+    - target: {fileID: 5103866395097014399, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
+      propertyPath: scene1Music
+      value: 
+      objectReference: {fileID: 8300000, guid: 788debf01f779d74fb275c22bb620e77, type: 3}
+    - target: {fileID: 5103866395097014399, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
+      propertyPath: scene3Music
+      value: 
+      objectReference: {fileID: 8300000, guid: 3d547e29c8839a14f94b394725cb2631, type: 3}
     - target: {fileID: 6476770141869435017, guid: a10835f021c597a4487ba943d89f88ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

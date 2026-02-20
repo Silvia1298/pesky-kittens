@@ -3,9 +3,10 @@ using TMPro;
 
 public class TextTrigger : MonoBehaviour
 {
-    public static GameObject textPanel;
+    public static GameObject canvasObject;
     public static TextTrigger currentActiveTrigger;
     public TMP_Text tutorialText;
+    public GameObject panelObject; // Reference to the panel that contains the text
     [TextArea] public string message;
 
     private Animator anim;
@@ -13,20 +14,40 @@ public class TextTrigger : MonoBehaviour
 
     private void Awake()
     {
-        if (textPanel == null)
-            textPanel = tutorialText.transform.parent.gameObject;
+        if (canvasObject == null && tutorialText != null)
+            canvasObject = tutorialText.transform.parent.parent.gameObject; // Canvas2
 
-        anim = tutorialText.GetComponent<Animator>();
+        if (tutorialText != null)
+            anim = tutorialText.GetComponent<Animator>();
+        
+        // Auto-find panel if not assigned
+        if (panelObject == null && tutorialText != null)
+            panelObject = tutorialText.transform.parent.gameObject; // Panel is direct parent of text
+    }
+
+    private void Start()
+    {
+        // Ensure panel and text are hidden at start
+        if (panelObject != null)
+            panelObject.SetActive(false);
     }
 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !hasBeenTriggered)
+        if (other.CompareTag("Player") && !hasBeenTriggered && tutorialText != null)
         {
             hasBeenTriggered = true;
             currentActiveTrigger = this;
-            textPanel.SetActive(true);
+            
+            // Activate canvas if needed
+            if (canvasObject != null)
+                canvasObject.SetActive(true);
+            
+            // Activate panel and text
+            if (panelObject != null)
+                panelObject.SetActive(true);
+            
             tutorialText.text = message;
             tutorialText.gameObject.SetActive(true);
 
@@ -41,8 +62,16 @@ public class TextTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && currentActiveTrigger == this)
         {
-            tutorialText.gameObject.SetActive(false);
-            textPanel.SetActive(false);
+            if (tutorialText != null)
+                tutorialText.gameObject.SetActive(false);
+            
+            // Deactivate panel
+            if (panelObject != null)
+                panelObject.SetActive(false);
+            
+            if (canvasObject != null)
+                canvasObject.SetActive(false);
+            
             currentActiveTrigger = null;
         }
     }

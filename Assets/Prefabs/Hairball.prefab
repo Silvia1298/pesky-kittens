@@ -169,5 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e205d5a6cd2e4132a1e0f935b6b5b17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hairball
-  damage: 3
+  damage: 1
   lifetime: 3
+  firedByPlayer: 1

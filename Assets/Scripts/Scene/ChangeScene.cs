@@ -15,6 +15,16 @@ public class ChangeScene : MonoBehaviour
             anim = text.GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        // Make sure the message is hidden at start
+        if (text != null)
+        {
+            // Don't deactivate anything, just make text invisible
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) return;
@@ -23,27 +33,52 @@ public class ChangeScene : MonoBehaviour
 
         bool canProceed = false;
 
-        if (sceneName == "Scene1")
+        // Check if boss exists in this scene
+        BossController boss = FindFirstObjectByType<BossController>();
+        
+        if (sceneName == "Scene3")
         {
-            // Only coins needed
-            canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+            // Boss scene: only requirement is boss being defeated (either destroyed or health <= 0)
+            if (boss != null)
+            {
+                canProceed = (boss.health <= 0);
+            }
+            else
+            {
+                // Boss was destroyed, so it was defeated
+                canProceed = true;
+            }
         }
-        else if (sceneName == "Scene2")
+        else if (ScoreManager.scoreManager != null)
         {
-            // Coins AND balls needed
-            canProceed = ScoreManager.scoreManager.AllCoinsCollected() 
-                         && BallCount.ballCount.AllBallsCollected();
+            // Non-boss scenes with ScoreManager: use original logic
+            if (sceneName == "Scene1")
+            {
+                // Only coins needed
+                canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+            }
+            else if (sceneName == "Scene2")
+            {
+                // Coins AND balls needed
+                canProceed = ScoreManager.scoreManager.AllCoinsCollected() 
+                             && BallCount.ballCount.AllBallsCollected();
+            }
+            else
+            {
+                // Default: only coins
+                canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+            }
         }
         else
         {
-            // Default: only coins
-            canProceed = ScoreManager.scoreManager.AllCoinsCollected();
+            // No boss and no ScoreManager, allow progression
+            canProceed = true;
         }
 
         if (canProceed)
         {
             Time.timeScale = 1f; // ensure game isn't paused
-            Debug.Log(SceneController.Instance);
+            Debug.Log("Scene changed from " + sceneName + " | SceneController.Instance: " + SceneController.Instance);
 
             SceneController.Instance.NextLevel();
         }
@@ -52,10 +87,18 @@ public class ChangeScene : MonoBehaviour
             // Show message
             if (text != null)
             {
-                text.text = message;
+                // Ensure canvas is active
+                if (TextTrigger.canvasObject != null)
+                    TextTrigger.canvasObject.SetActive(true);
+                    
                 text.gameObject.SetActive(true);
+                text.text = message;
+                text.color = new Color(text.color.r, text.color.g, text.color.b, 1);
+                
                 if (anim != null)
                     anim.Play("TextPopUp", 0, 0f);
+                
+                Debug.Log("Showing message: " + message);
             }
         }
     }
@@ -64,7 +107,7 @@ public class ChangeScene : MonoBehaviour
     {
         if (other.CompareTag("Player") && text != null)
         {
-            text.gameObject.SetActive(false);
+            text.color = new Color(text.color.r, text.color.g, text.color.b, 0);
         }
     }
 }

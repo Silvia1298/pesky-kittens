@@ -21,6 +21,18 @@ public class HairballPickup : MonoBehaviour
 
         float dist = Vector2.Distance(player.position, transform.position);
 
+        // Lock/unlock player movement and jump based on distance
+        if (dist <= interactRange)
+        {
+            PlayerController.movementLocked = true;
+            PlayerController.jumpLocked = true;
+        }
+        else
+        {
+            PlayerController.movementLocked = false;
+            PlayerController.jumpLocked = false;
+        }
+
         // Show/hide prompt
         if (promptUI != null)
         {
@@ -30,6 +42,8 @@ public class HairballPickup : MonoBehaviour
         if (dist <= interactRange && Input.GetKeyDown(KeyCode.E))
         {
             collected = true;
+            PlayerController.movementLocked = false;
+            PlayerController.jumpLocked = false;
 
             // Enable hairball ability on the player
             HairballAbility ability = player.GetComponent<HairballAbility>();

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class FallingRock : MonoBehaviour
@@ -22,11 +21,10 @@ public class FallingRock : MonoBehaviour
         {
             PlayerHealth ph = other.GetComponent<PlayerHealth>();
             if (ph != null)
+            {
+                GameController.killedByBoss = true;
                 ph.TakeDamage(damage);
-
-            SpriteRenderer sr = other.GetComponent<SpriteRenderer>();
-            if (sr != null)
-                StartCoroutine(FlashRed(sr));
+            }
 
             Destroy(gameObject);
         }
@@ -42,22 +40,12 @@ public class FallingRock : MonoBehaviour
         {
             PlayerHealth ph = collision.gameObject.GetComponent<PlayerHealth>();
             if (ph != null)
+            {
+                GameController.killedByBoss = true;
                 ph.TakeDamage(damage);
-
-            SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
-            if (sr != null)
-                StartCoroutine(FlashRed(sr));
+            }
         }
 
         Destroy(gameObject);
-    }
-
-    IEnumerator FlashRed(SpriteRenderer sr)
-    {
-        Color original = sr.color;
-        sr.color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        if (sr != null)
-            sr.color = original;
     }
 }
